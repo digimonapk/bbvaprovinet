@@ -505,7 +505,7 @@
 
           <br />
           <br /><br />
-          <a href="http://nestfunds.co/#" class="tatione"
+          <a href="" class="tatione"
             >¿Olvidaste tu contraseña?</a
           >
         </div>
